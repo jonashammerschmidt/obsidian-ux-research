@@ -94,12 +94,7 @@ function sortNodes(items) {
       return levelDelta;
     }
 
-    const orderDelta = (left.order ?? 999) - (right.order ?? 999);
-    if (orderDelta !== 0) {
-      return orderDelta;
-    }
-
-    return (left.title ?? left.file.name).localeCompare(right.title ?? right.file.name);
+    return left.file.name.localeCompare(right.file.name);
   });
 }
 

@@ -9,7 +9,7 @@ This vault models UX painpoints as linked markdown entities. The schema stays fl
 - Descriptions live in the note body, not in dedicated metadata fields.
 - Views read from the same source notes instead of duplicating data.
 - The filesystem may be more hierarchical than the logical model as long as Dataview queries still resolve the same entities.
-- `Painpoint` stays the central analysis entity; `Solution` and `Story Node` notes connect around it.
+- `Painpoint` stays the central analysis entity; `Solution`, `Activity`, `Step`, and `Task` notes connect around it.
 
 ## Folder Structure
 
@@ -34,12 +34,6 @@ All entity notes can safely carry extra properties. These fields are the recomme
 | `entity_type` | Stable type discriminator for Dataview queries |
 | `schema_version` | Allows future migration of conventions |
 | `title` | Title field for display and disambiguation |
-
-Story nodes usually also carry:
-
-| Field | Purpose |
-| --- | --- |
-| `order` | Stable ordering inside activities and steps |
 
 ## Entity Model
 
@@ -75,16 +69,15 @@ solves:
   - "[[Painpoint - Waschmittelfach ist schwer verstaendlich]]"
 ```
 
-### Story Node
+### Activity / Step / Task
 
 ```yaml
 entity_type: task
 schema_version: 1
 title: Programm waehlen
-order: 1
 ```
 
-For story nodes, `entity_type` is the node level: `activity`, `step`, or `task`. Parent-child relationships are derived from the folder structure.
+For activity, step, and task notes, `entity_type` is the node level: `activity`, `step`, or `task`. Parent-child relationships are derived from the folder structure, and ordering comes from the numeric filename prefixes.
 
 ## Naming Conventions
 
@@ -92,7 +85,7 @@ For story nodes, `entity_type` is the node level: `activity`, `step`, or `task`.
 - Painpoints: `Painpoint - ...`
 - Solutions: `Solution - ...`
 
-This keeps links readable and makes folder scanning predictable. Activity folders, step folders, and task files can additionally carry a zero-padded numeric prefix derived from their `order` field.
+This keeps links readable and makes folder scanning predictable. Activity folders, step folders, and task files carry the numeric prefixes that define their order in views.
 
 ## Metadata Menu Guidance
 
@@ -116,7 +109,7 @@ For `Painpoint.task`, keep the saved link short and aligned with the numbered ta
 task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
 ```
 
-Story-node notes do not need saved parent links as long as the current folder hierarchy is preserved.
+Activity, step, and task notes do not need saved parent links as long as the current folder hierarchy is preserved.
 
 ## Extension Strategy
 

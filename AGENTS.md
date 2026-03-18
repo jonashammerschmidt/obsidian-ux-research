@@ -34,16 +34,18 @@ Do not hardcode one fixed UX workflow or taxonomy.
 
 - `Painpoint`
 - `Solution`
-- `Story Node`
+- `Activity`
+- `Step`
+- `Task`
 
 ### Core Relationships
 
 - A `Painpoint` belongs to one `Task`
 - A `Solution` can solve multiple `Painpoints`
 - A `Painpoint` derives its linked `Solutions` from those `Solution` notes
-- `Story Nodes` form a hierarchy
-- `Story Node` hierarchy derives from the current folder structure
-- `Story Node.order` defines stable view ordering independently from folder names
+- `Activity`, `Step`, and `Task` notes form a hierarchy
+- Their hierarchy derives from the current folder structure
+- Their ordering derives from the numeric filename prefixes
 
 ### Current View Surface
 
@@ -57,8 +59,7 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - frontmatter for fields
 - links for relations
 - `Painpoint.task` should resolve via the numbered task file name and usually use a readable alias like `TASK: ...`
-- story-node folders may carry zero-padded order prefixes in the filesystem
-- story nodes should keep `order` in frontmatter so views do not depend on filename sorting alone
+- activity, step, and task folders/files may carry zero-padded order prefixes in the filesystem
 - structure must stay extendable
 - new fields should be easy to add later
 
