@@ -57,6 +57,23 @@ function nodeLevel(node) {
   return (node?.entity_type ?? "").toLowerCase();
 }
 
+function relationFieldFor(level) {
+  if (level === "step") {
+    return "parentActivity";
+  }
+
+  if (level === "task") {
+    return "parentStep";
+  }
+
+  return null;
+}
+
+function parentRef(node) {
+  const field = relationFieldFor(nodeLevel(node));
+  return field ? node?.[field] : null;
+}
+
 function sortNodes(items) {
   return items.array().sort((left, right) => {
     const levelDelta = (levelOrder[nodeLevel(left) || "task"] ?? 99)
@@ -76,8 +93,22 @@ function sortNodes(items) {
 }
 
 function childrenOf(parent) {
+  if (!parent) {
+    return sortNodes(nodes.where(node => nodeLevel(node) === "activity"));
+  }
+
+  const childLevel = nodeLevel(parent) === "activity"
+    ? "step"
+    : nodeLevel(parent) === "step"
+      ? "task"
+      : null;
+
+  if (!childLevel) {
+    return [];
+  }
+
   return sortNodes(
-    nodes.where(node => parent ? linkKey(node.parent) === parent.file.name : !node.parent)
+    nodes.where(node => nodeLevel(node) === childLevel && linkKey(parentRef(node)) === parent.file.name)
   );
 }
 

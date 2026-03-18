@@ -3,7 +3,6 @@ entity_type: task
 schema_version: 1
 title:
 order:
-parent:
 ---
 
 ## Role In Story Map
@@ -11,4 +10,6 @@ parent:
 Explain where this node sits in the journey or domain structure.
 
 Use `entity_type: activity`, `step`, or `task` as needed.
-Keep `parent` empty for top-level activities.
+Activities do not need a parent field.
+Steps use `parentActivity: "[[NN - Activity - ...|ACTIVITY: ...]]"`.
+Tasks use `parentStep: "[[NN - Step - ...|STEP: ...]]"`.

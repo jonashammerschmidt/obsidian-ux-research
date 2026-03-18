@@ -3,7 +3,7 @@ entity_type: task
 schema_version: 1
 title: Waschmittel dosieren
 order: 1
-parent: [[02 - Step - Maschine beladen]]
+parentStep: "[[02 - Step - Maschine beladen|STEP: Maschine beladen]]"
 ---
 
 Die richtige Menge Waschmittel wird gewaehlt und eingefuellt.

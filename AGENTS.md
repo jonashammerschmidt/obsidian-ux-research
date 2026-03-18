@@ -42,7 +42,8 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - A `Solution` can solve multiple `Painpoints`
 - A `Painpoint` derives its linked `Solutions` from those `Solution` notes
 - `Story Nodes` form a hierarchy
-- `Story Node.parent` links `step -> activity` and `task -> step`
+- `Story Node.parentActivity` links `step -> activity`
+- `Story Node.parentStep` links `task -> step`
 - `Story Node.order` defines stable view ordering independently from folder names
 
 ### Current View Surface

@@ -1,13 +1,24 @@
 {
   "presetFields": [
     {
-      "id": "parent",
-      "name": "parent",
+      "id": "parentActivity",
+      "name": "parentActivity",
       "type": "File",
       "path": "",
       "options": {
-        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => {\n  const candidateType = (p.entity_type ?? \"\").toLowerCase();\n  const currentType = (current?.entity_type ?? \"\").toLowerCase();\n\n  if (![\"activity\", \"step\", \"task\"].includes(candidateType)) {\n    return false;\n  }\n\n  if (currentType === \"task\") {\n    return candidateType === \"step\";\n  }\n\n  if (currentType === \"step\") {\n    return candidateType === \"activity\";\n  }\n\n  return false;\n})",
-        "customRendering": "`${((page.entity_type ?? \"node\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?(Activity|Step|Task)\\\\s*-\\\\s*/i, \"\")}`",
+        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => (p.entity_type ?? \"\").toLowerCase() === \"activity\")",
+        "customRendering": "`${((page.entity_type ?? \"activity\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?Activity\\\\s*-\\\\s*/i, \"\")}`",
+        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
+      }
+    },
+    {
+      "id": "parentStep",
+      "name": "parentStep",
+      "type": "File",
+      "path": "",
+      "options": {
+        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => (p.entity_type ?? \"\").toLowerCase() === \"step\")",
+        "customRendering": "`${((page.entity_type ?? \"step\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?Step\\\\s*-\\\\s*/i, \"\")}`",
         "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
       }
     },

@@ -40,7 +40,8 @@ Story nodes usually also carry:
 | Field | Purpose |
 | --- | --- |
 | `order` | Stable ordering inside activities and steps |
-| `parent` | Link to the parent story node, blank for top-level activities |
+| `parentActivity` | Link from a step to its owning activity |
+| `parentStep` | Link from a task to its owning step |
 
 ## Entity Model
 
@@ -83,10 +84,10 @@ entity_type: task
 schema_version: 1
 title: Programm waehlen
 order: 1
-parent: [[03 - Step - Waschgang starten]]
+parentStep: "[[03 - Step - Waschgang starten|STEP: Waschgang starten]]"
 ```
 
-For story nodes, `entity_type` is the node level: `activity`, `step`, or `task`.
+For story nodes, `entity_type` is the node level: `activity`, `step`, or `task`. Activities keep no parent field, steps keep `parentActivity`, and tasks keep `parentStep`.
 
 ## Naming Conventions
 
@@ -103,13 +104,15 @@ Metadata Menu can edit all frontmatter relation fields directly. Recommended fie
 | Field | Suggested type |
 | --- | --- |
 | `task` | File |
-| `parent` | File |
+| `parentActivity` | File |
+| `parentStep` | File |
 | `solves` | MultiFile |
 
 Configured relation queries currently support:
 
 - `task`: only suggests task notes
-- `parent`: only suggests valid story-node parents for the current story node
+- `parentActivity`: only suggests activity notes
+- `parentStep`: only suggests step notes
 - `solves`: only suggests painpoints
 
 These Metadata Menu definitions are stored in [data.json](/Users/jonas/dev/obsidian-ux-research/.obsidian/plugins/metadata-menu/data.json), so relation fields open a searchable file picker instead of relying on raw wiki-link typing.
@@ -118,6 +121,13 @@ For `Painpoint.task`, keep the saved link short and aligned with the numbered ta
 
 ```yaml
 task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
+```
+
+Apply the same saved-link pattern to story-node relations:
+
+```yaml
+parentActivity: "[[01 - Activity - Waesche waschen|ACTIVITY: Waesche waschen]]"
+parentStep: "[[02 - Step - Maschine beladen|STEP: Maschine beladen]]"
 ```
 
 ## Extension Strategy
