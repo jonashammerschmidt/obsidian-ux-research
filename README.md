@@ -1,13 +1,12 @@
 # obsidian-ux-research
 
-A small Obsidian template for UX research, painpoint mapping, and user story maps.
-Work in progress.
+A flexible Obsidian vault for UX painpoint analysis, linked solution ideas, and story-map based navigation.
 
 ## Installation
 
 1. Copy or clone this repo into your Obsidian vaults folder.
 2. Open the folder as a vault in Obsidian.
-3. Install and enable the community plugins `Dataview`, `Kanban`, `Metadata Menu`, and `Folder note`.
+3. Install and enable the community plugins `Dataview`, `Kanban`, and `Metadata Menu`.
 4. Apply the settings below.
 5. Restart Obsidian
 
@@ -20,16 +19,28 @@ Work in progress.
 
 ## Overview
 
-- `00 System`: core system docs and note templates
-- `00 System/views`: shared Dataview custom views reused by notes and dashboard pages
+- `00 System`: core system docs, templates, and shared DataviewJS views
+- `00 System/Templates`: templates for `Painpoint`, `Solution`, and `Story Node` notes
+- `00 System/views`: shared rendering logic for backlog, relationship, and user-story-map views
+- `01 Story Nodes/Activities/Activities.md`: optional root note for the activity collection
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Activity - Title>.md`: one folder-note per activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`: one folder-note per step inside its activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`: task files directly inside their parent step folder
 - `02 Problem Analysis/01 Painpoints`: central UX painpoints
-- `03 Solutions/<Solution Name>.md`: one markdown note per solution idea
-- `90 Views`: ready-made views like backlog, story map, workflow, and relationships
+- `03 Solutions/Solution - ....md`: one markdown note per solution idea
+- `90 Views/User Story Map View.md`: current dashboard note for browsing the story-node hierarchy with optional painpoints
 
 The story-node hierarchy is physical as well as logical: activities contain step folders, and step folders contain the task files they own.
+
+The current vault state ships one ready-made dashboard note in `90 Views`. Additional reusable DataviewJS views for backlog and relationship tables already live in `00 System/views` and can be embedded later without changing the data model.
+
+## Data Model
+
+- `Painpoint` is the central entity and lives in `02 Problem Analysis/01 Painpoints`.
+- Every painpoint belongs to exactly one task via the `task` field.
+- `Solution` notes live in `03 Solutions` and own the editable `solves` links to one or more painpoints.
+- `Painpoint` notes derive their related solutions from those `Solution.solves` links.
+- `Story Node` notes use `entity_type: activity|step|task`, `order`, and `parent` to describe the story-map hierarchy.
 
 ## Editing Workflow
 
@@ -37,5 +48,5 @@ The story-node hierarchy is physical as well as logical: activities contain step
 - Keep `Painpoint.task` in the numbered short-link format, for example `"[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"`.
 - Maintain solution links exclusively from solution notes via `solves`. Painpoint notes render the matching solutions as a read-only Dataview list.
 - Keep descriptions in the note body instead of frontmatter fields.
-- The dashboard notes in `90 Views` use inline control fields such as `show_painpoints:: false` or `relationship_scope:: all` so the controls stay visible without cluttering the Properties panel.
-- Dataview automatic refresh stays enabled with a shorter interval for faster feedback after metadata changes.
+- Keep `order` on story nodes aligned with the numeric prefixes in the filesystem when you rename or move nodes.
+- The current dashboard note in `90 Views` uses inline control fields such as `show_empty_tasks:: true`, `show_painpoints:: true`, and `hide_tasks_without_painpoints:: false` so controls stay visible without cluttering the Properties panel.

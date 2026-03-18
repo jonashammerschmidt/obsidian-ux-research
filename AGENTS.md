@@ -19,13 +19,16 @@ Do not hardcode one fixed UX workflow or taxonomy.
 ### Current Folder Layout
 
 - `00 System`
+- `00 System/Templates`
+- `00 System/views/<view-name>/view.js`
 - `01 Story Nodes`
+- `01 Story Nodes/Activities/Activities.md`
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Activity - Title>.md`
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`
 - `02 Problem Analysis/01 Painpoints`
 - `03 Solutions/Solution - ....md`
-- `90 Views`
+- `90 Views/User Story Map View.md`
 
 ### Entities
 
@@ -39,12 +42,14 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - A `Solution` can solve multiple `Painpoints`
 - A `Painpoint` derives its linked `Solutions` from those `Solution` notes
 - `Story Nodes` form a hierarchy
+- `Story Node.parent` links `step -> activity` and `task -> step`
+- `Story Node.order` defines stable view ordering independently from folder names
 
-### Required Views
+### Current View Surface
 
-- Backlog view
-- User story map view
-- Relationship view
+- `90 Views/User Story Map View.md` is the current ready-made dashboard note
+- Shared DataviewJS views live in `00 System/views/backlog`, `00 System/views/user-story-map`, and `00 System/views/relationship`
+- Do not assume dedicated dashboard notes already exist for every shared view
 
 ## Implementation Constraints
 
@@ -53,6 +58,7 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - links for relations
 - `Painpoint.task` should resolve via the numbered task file name and usually use a readable alias like `TASK: ...`
 - story-node folders may carry zero-padded order prefixes in the filesystem
+- story nodes should keep `order` in frontmatter so views do not depend on filename sorting alone
 - structure must stay extendable
 - new fields should be easy to add later
 
@@ -67,4 +73,5 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - Keep Dataview views readable from the current folder structure without duplicating data.
 - Prefer readable wiki-link aliases even when file names carry numeric prefixes.
 - Maintain editable Solution-to-Painpoint links only on the `Solution` notes via `solves`.
-- Dashboard controls in `90 Views` may use Dataview inline fields instead of top-level Properties.
+- Current dashboard controls in `90 Views` use Dataview inline fields instead of top-level Properties.
+- If new dashboard notes are added later, keep the same pattern: note-local inline controls, shared rendering logic in `00 System/views`.
