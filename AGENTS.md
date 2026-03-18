@@ -24,7 +24,7 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`
 - `02 Problem Analysis/01 Painpoints`
-- `03 Solution/<Solution Name>/Solution - ....md`
+- `03 Solutions/Solution - ....md`
 - `90 Views`
 
 ### Entities

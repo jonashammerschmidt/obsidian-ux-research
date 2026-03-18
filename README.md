@@ -26,7 +26,7 @@ Work in progress.
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`: one folder-note per step inside its activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`: task files directly inside their parent step folder
 - `02 Problem Analysis/01 Painpoints`: central UX painpoints
-- `03 Solution/<Solution Name>/`: one folder per solution idea, ready for mockups or other artifacts
+- `03 Solutions/<Solution Name>.md`: one markdown note per solution idea
 - `90 Views`: ready-made views like backlog, story map, workflow, and relationships
 
 The story-node hierarchy is physical as well as logical: activities contain step folders, and step folders contain the task files they own.

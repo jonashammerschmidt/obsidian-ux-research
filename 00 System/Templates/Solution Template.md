@@ -2,7 +2,7 @@
 entity_type: solution
 schema_version: 1
 title: Solution Template
-solves:
+solves: []
 ---
 
 ## Approach

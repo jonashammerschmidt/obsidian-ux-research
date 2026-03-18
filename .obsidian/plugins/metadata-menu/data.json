@@ -1,0 +1,127 @@
+{
+  "presetFields": [
+    {
+      "id": "parent",
+      "name": "parent",
+      "type": "File",
+      "path": "",
+      "options": {
+        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => {\n  const candidateType = (p.entity_type ?? \"\").toLowerCase();\n  const currentType = (current?.entity_type ?? \"\").toLowerCase();\n\n  if (![\"activity\", \"step\", \"task\"].includes(candidateType)) {\n    return false;\n  }\n\n  if (currentType === \"task\") {\n    return candidateType === \"step\";\n  }\n\n  if (currentType === \"step\") {\n    return candidateType === \"activity\";\n  }\n\n  return false;\n})",
+        "customRendering": "`${((page.entity_type ?? \"node\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?(Activity|Step|Task)\\\\s*-\\\\s*/i, \"\")}`",
+        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
+      }
+    },
+    {
+      "id": "task",
+      "name": "task",
+      "type": "File",
+      "path": "",
+      "options": {
+        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => (p.entity_type ?? \"\").toLowerCase() === \"task\")",
+        "customRendering": "`${((page.entity_type ?? \"task\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?Task\\\\s*-\\\\s*/i, \"\")}`",
+        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
+      }
+    },
+    {
+      "id": "solves",
+      "name": "solves",
+      "type": "Multi",
+      "path": "",
+      "options": {
+        "sourceType": "ValuesFromDVQuery",
+        "valuesList": {},
+        "valuesFromDVQuery": "dv.pages().where(p => (p.entity_type ?? \"\").toLowerCase() === \"painpoint\").sort(p => p.file.name, 'asc').map(p => `[[${p.file.name.replace(/\\\\.md$/, \"\")}]]`)"
+      }
+    },
+    {
+      "id": "focus_painpoint",
+      "name": "focus_painpoint",
+      "type": "File",
+      "path": "",
+      "options": {
+        "dvQueryString": "dv.pages().where(p => (p.entity_type ?? \"\").toLowerCase() === \"painpoint\").map(p => p.file)",
+        "customRendering": "(page.title ?? page.file.name).replace(/^Painpoint\\\\s*-\\\\s*/i, \"\")",
+        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
+      }
+    },
+    {
+      "id": "relationship_scope",
+      "name": "relationship_scope",
+      "type": "Select",
+      "path": "",
+      "options": {
+        "sourceType": "ValuesList",
+        "valuesList": {
+          "1": "all",
+          "2": "focus"
+        }
+      }
+    },
+    {
+      "id": "sort_direction",
+      "name": "sort_direction",
+      "type": "Select",
+      "path": "",
+      "options": {
+        "sourceType": "ValuesList",
+        "valuesList": {
+          "1": "asc",
+          "2": "desc"
+        }
+      }
+    },
+    {
+      "id": "show_empty_tasks",
+      "name": "show_empty_tasks",
+      "type": "Boolean",
+      "path": "",
+      "options": {}
+    },
+    {
+      "id": "show_painpoints",
+      "name": "show_painpoints",
+      "type": "Boolean",
+      "path": "",
+      "options": {}
+    },
+    {
+      "id": "hide_tasks_without_painpoints",
+      "name": "hide_tasks_without_painpoints",
+      "type": "Boolean",
+      "path": "",
+      "options": {}
+    }
+  ],
+  "fileClassQueries": [],
+  "displayFieldsInContextMenu": true,
+  "globallyIgnoredFields": [],
+  "classFilesPath": null,
+  "isAutosuggestEnabled": true,
+  "fileClassAlias": "fileClass",
+  "settingsVersion": "5.0",
+  "firstDayOfWeek": 1,
+  "enableLinks": true,
+  "enableTabHeader": true,
+  "enableEditor": true,
+  "enableBacklinks": true,
+  "enableStarred": true,
+  "enableFileExplorer": true,
+  "enableSearch": true,
+  "enableProperties": true,
+  "tableViewMaxRecords": 20,
+  "frontmatterListDisplay": "asArray",
+  "fileClassExcludedFolders": [],
+  "showIndexingStatusInStatusBar": true,
+  "fileIndexingExcludedFolders": [],
+  "fileIndexingExcludedExtensions": [
+    ".excalidraw.md"
+  ],
+  "fileIndexingExcludedRegex": [],
+  "frontmatterOnly": false,
+  "showFileClassSelectInModal": true,
+  "chooseFileClassAtFileCreation": false,
+  "autoInsertFieldsAtFileClassInsertion": false,
+  "fileClassIcon": "package",
+  "isAutoCalculationEnabled": true,
+  "disableDataviewPrompt": false
+}

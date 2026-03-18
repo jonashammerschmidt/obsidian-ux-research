@@ -6,7 +6,7 @@ const hideTasksWithoutPainpoints = options.hideTasksWithoutPainpoints ?? current
 const nodeTypes = new Set(["activity", "step", "task"]);
 const nodes = dv.pages('"01 Story Nodes"').where(page => nodeTypes.has((page.entity_type ?? "").toLowerCase()));
 const painpoints = dv.pages('"02 Problem Analysis/01 Painpoints"').where(page => page.entity_type === "painpoint");
-const solutions = dv.pages('"03 Solution"').where(page => page.entity_type === "solution");
+const solutions = dv.pages('"03 Solutions"').where(page => page.entity_type === "solution");
 const levelOrder = { activity: 1, step: 2, task: 3 };
 const container = dv.container;
 

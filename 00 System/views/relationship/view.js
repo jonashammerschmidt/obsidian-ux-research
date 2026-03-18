@@ -2,7 +2,7 @@ const current = dv.current();
 const options = input ?? {};
 const allPages = dv.pages();
 const allPainpoints = dv.pages('"02 Problem Analysis/01 Painpoints"').where(page => page.entity_type === "painpoint");
-const allSolutions = dv.pages('"03 Solution"').where(page => page.entity_type === "solution");
+const allSolutions = dv.pages('"03 Solutions"').where(page => page.entity_type === "solution");
 const scope = (options.scope ?? current.relationship_scope ?? "all").toLowerCase();
 const focusPainpoint = options.focus ?? current.focus_painpoint;
 

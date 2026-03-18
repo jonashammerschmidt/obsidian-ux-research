@@ -12,7 +12,7 @@ Die Programmauswahl ist kognitiv unnoetig aufwendig.
 ## Related Solutions
 
 ```dataview
-LIST FROM "03 Solution"
+LIST FROM "03 Solutions"
 WHERE contains(solves, this.file.link)
 SORT file.name ASC
 ```

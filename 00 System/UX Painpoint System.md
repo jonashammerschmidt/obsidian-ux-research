@@ -18,7 +18,7 @@ This vault models UX painpoints as linked markdown entities. The schema stays fl
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`: steps stored as folder notes below their activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`: executable task nodes stored directly inside their step folder
 - `02 Problem Analysis/01 Painpoints`: central painpoint records
-- `03 Solution/<Solution Name>/`: one folder per solution note with room for mockups and attachments
+- `03 Solutions/<Solution Name>.md`: one markdown note per solution
 - `90 Views`: Dataview and Kanban views
 
 ## Common Fields
@@ -47,7 +47,7 @@ task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
 Painpoint notes render linked solutions as a read-only Dataview list:
 
 ```dataview
-LIST FROM "03 Solution"
+LIST FROM "03 Solutions"
 WHERE contains(solves, this.file.link)
 SORT file.name ASC
 ```
@@ -61,8 +61,8 @@ entity_type: solution
 schema_version: 1
 title: Solution - Standardprogramme in Klartext hervorheben
 solves:
-  - [[Painpoint - Passendes Programm schwer zu finden]]
-  - [[Painpoint - Waschmittelfach ist schwer verstaendlich]]
+  - "[[Painpoint - Passendes Programm schwer zu finden]]"
+  - "[[Painpoint - Waschmittelfach ist schwer verstaendlich]]"
 ```
 
 ### Story Node

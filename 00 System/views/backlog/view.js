@@ -4,7 +4,7 @@ const sortDirection = (options.sortDirection ?? current.sort_direction ?? "asc")
 const allPages = dv.pages();
 const storyNodes = dv.pages('"01 Story Nodes"').where(page => ["activity", "step", "task"].includes((page.entity_type ?? "").toLowerCase()));
 const painpoints = dv.pages('"02 Problem Analysis/01 Painpoints"').where(page => page.entity_type === "painpoint").array();
-const solutions = dv.pages('"03 Solution"').where(page => page.entity_type === "solution");
+const solutions = dv.pages('"03 Solutions"').where(page => page.entity_type === "solution");
 
 function toArray(value) {
   if (!value) {

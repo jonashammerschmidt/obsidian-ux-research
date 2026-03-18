@@ -3,7 +3,13 @@
 .obsidian/app.json
 
 # Ignore plugin data
-.obsidian/plugins/
+.obsidian/plugins/*
+!.obsidian/plugins/
+!.obsidian/plugins/metadata-menu/
+.obsidian/plugins/metadata-menu/*
+!.obsidian/plugins/metadata-menu/data.json
+
+
 
 # Ignore system and editor files (more specific to what I do)
 .vscode/
