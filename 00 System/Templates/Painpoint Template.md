@@ -5,15 +5,8 @@ title:
 task:
 ---
 
-## Summary
+> Describe the painpoint here.
 
-Describe the painpoint in user-centered language.
-
-Keep `task` as a readable short wiki link such as `[[01 - Task - Example|TASK: Example]]`.
-
-## Notes
-
-- Add evidence, links, or research context here.
 
 ## Related Solutions
 
