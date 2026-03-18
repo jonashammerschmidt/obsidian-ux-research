@@ -1,28 +1,6 @@
 {
   "presetFields": [
     {
-      "id": "parentActivity",
-      "name": "parentActivity",
-      "type": "File",
-      "path": "",
-      "options": {
-        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => (p.entity_type ?? \"\").toLowerCase() === \"activity\")",
-        "customRendering": "`${((page.entity_type ?? \"activity\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?Activity\\\\s*-\\\\s*/i, \"\")}`",
-        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
-      }
-    },
-    {
-      "id": "parentStep",
-      "name": "parentStep",
-      "type": "File",
-      "path": "",
-      "options": {
-        "dvQueryString": "dv.pages('\\\"01 Story Nodes\\\"').where(p => (p.entity_type ?? \"\").toLowerCase() === \"step\")",
-        "customRendering": "`${((page.entity_type ?? \"step\") + \"\").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^(?:\\d+\\s*-\\s*)?Step\\\\s*-\\\\s*/i, \"\")}`",
-        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
-      }
-    },
-    {
       "id": "task",
       "name": "task",
       "type": "File",

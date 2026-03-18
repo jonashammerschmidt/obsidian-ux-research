@@ -40,8 +40,6 @@ Story nodes usually also carry:
 | Field | Purpose |
 | --- | --- |
 | `order` | Stable ordering inside activities and steps |
-| `parentActivity` | Link from a step to its owning activity |
-| `parentStep` | Link from a task to its owning step |
 
 ## Entity Model
 
@@ -84,10 +82,9 @@ entity_type: task
 schema_version: 1
 title: Programm waehlen
 order: 1
-parentStep: "[[03 - Step - Waschgang starten|STEP: Waschgang starten]]"
 ```
 
-For story nodes, `entity_type` is the node level: `activity`, `step`, or `task`. Activities keep no parent field, steps keep `parentActivity`, and tasks keep `parentStep`.
+For story nodes, `entity_type` is the node level: `activity`, `step`, or `task`. Parent-child relationships are derived from the folder structure.
 
 ## Naming Conventions
 
@@ -104,15 +101,11 @@ Metadata Menu can edit all frontmatter relation fields directly. Recommended fie
 | Field | Suggested type |
 | --- | --- |
 | `task` | File |
-| `parentActivity` | File |
-| `parentStep` | File |
 | `solves` | MultiFile |
 
 Configured relation queries currently support:
 
 - `task`: only suggests task notes
-- `parentActivity`: only suggests activity notes
-- `parentStep`: only suggests step notes
 - `solves`: only suggests painpoints
 
 These Metadata Menu definitions are stored in [data.json](/Users/jonas/dev/obsidian-ux-research/.obsidian/plugins/metadata-menu/data.json), so relation fields open a searchable file picker instead of relying on raw wiki-link typing.
@@ -123,12 +116,7 @@ For `Painpoint.task`, keep the saved link short and aligned with the numbered ta
 task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
 ```
 
-Apply the same saved-link pattern to story-node relations:
-
-```yaml
-parentActivity: "[[01 - Activity - Waesche waschen|ACTIVITY: Waesche waschen]]"
-parentStep: "[[02 - Step - Maschine beladen|STEP: Maschine beladen]]"
-```
+Story-node notes do not need saved parent links as long as the current folder hierarchy is preserved.
 
 ## Extension Strategy
 

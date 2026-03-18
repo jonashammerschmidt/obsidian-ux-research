@@ -40,14 +40,14 @@ The current vault state ships one ready-made dashboard note in `90 Views`. Addit
 - Every painpoint belongs to exactly one task via the `task` field.
 - `Solution` notes live in `03 Solutions` and own the editable `solves` links to one or more painpoints.
 - `Painpoint` notes derive their related solutions from those `Solution.solves` links.
-- `Story Node` notes use `entity_type: activity|step|task`, `order`, `parentActivity`, and `parentStep` to describe the story-map hierarchy.
+- `Story Node` notes use `entity_type: activity|step|task` and `order`; hierarchy is derived from the folder structure.
 
 ## Editing Workflow
 
-- Use `Metadata Menu` for relation fields like `task`, `parentActivity`, `parentStep`, and `solves`. They are preconfigured as searchable `File` or `MultiFile` fields with filtered suggestions.
+- Use `Metadata Menu` for relation fields like `task` and `solves`. They are preconfigured as searchable `File` or `MultiFile` fields with filtered suggestions.
 - Keep `Painpoint.task` in the numbered short-link format, for example `"[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"`.
-- Keep `Story Node.parentActivity` and `Story Node.parentStep` in the same aliased link style, for example `"[[01 - Activity - Waesche waschen|ACTIVITY: Waesche waschen]]"` and `"[[02 - Step - Maschine beladen|STEP: Maschine beladen]]"`.
 - Maintain solution links exclusively from solution notes via `solves`. Painpoint notes render the matching solutions as a read-only Dataview list.
 - Keep descriptions in the note body instead of frontmatter fields.
 - Keep `order` on story nodes aligned with the numeric prefixes in the filesystem when you rename or move nodes.
+- Keep story-node files in the expected folder-note layout, because the hierarchy is resolved from their folders.
 - The current dashboard note in `90 Views` uses inline control fields such as `show_empty_tasks:: true`, `show_painpoints:: true`, and `hide_tasks_without_painpoints:: false` so controls stay visible without cluttering the Properties panel.

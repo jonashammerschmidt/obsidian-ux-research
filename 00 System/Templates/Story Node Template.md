@@ -11,5 +11,5 @@ Explain where this node sits in the journey or domain structure.
 
 Use `entity_type: activity`, `step`, or `task` as needed.
 Activities do not need a parent field.
-Steps use `parentActivity: "[[NN - Activity - ...|ACTIVITY: ...]]"`.
-Tasks use `parentStep: "[[NN - Step - ...|STEP: ...]]"`.
+Steps and tasks also do not need parent fields.
+Their hierarchy is derived from the folder structure.

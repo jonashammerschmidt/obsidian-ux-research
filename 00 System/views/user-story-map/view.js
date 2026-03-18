@@ -57,21 +57,32 @@ function nodeLevel(node) {
   return (node?.entity_type ?? "").toLowerCase();
 }
 
-function relationFieldFor(level) {
+function folderPath(node) {
+  return node?.file?.folder ?? node?.file?.path?.replace(/\/[^/]+$/, "") ?? "";
+}
+
+function parentFolder(path) {
+  return path ? path.replace(/\/[^/]+$/, "") : "";
+}
+
+function derivedParent(node) {
+  const level = nodeLevel(node);
+  const ownFolder = folderPath(node);
+
   if (level === "step") {
-    return "parentActivity";
+    const activityFolder = parentFolder(ownFolder);
+    return nodes.where(candidate =>
+      nodeLevel(candidate) === "activity" && folderPath(candidate) === activityFolder
+    ).array()[0] ?? null;
   }
 
   if (level === "task") {
-    return "parentStep";
+    return nodes.where(candidate =>
+      nodeLevel(candidate) === "step" && folderPath(candidate) === ownFolder
+    ).array()[0] ?? null;
   }
 
   return null;
-}
-
-function parentRef(node) {
-  const field = relationFieldFor(nodeLevel(node));
-  return field ? node?.[field] : null;
 }
 
 function sortNodes(items) {
@@ -108,7 +119,10 @@ function childrenOf(parent) {
   }
 
   return sortNodes(
-    nodes.where(node => nodeLevel(node) === childLevel && linkKey(parentRef(node)) === parent.file.name)
+    nodes.where(node =>
+      nodeLevel(node) === childLevel
+      && derivedParent(node)?.file?.path === parent.file.path
+    )
   );
 }
 
