@@ -1,0 +1,13 @@
+# Ignore volatile UI-related state
+.obsidian/workspace.json
+.obsidian/app.json
+
+# Ignore plugin data
+.obsidian/plugins/
+
+# Ignore system and editor files (more specific to what I do)
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db

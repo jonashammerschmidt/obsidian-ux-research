@@ -1,0 +1,256 @@
+.ux-story-map-view {
+  --ux-map-paper: #fffdf9;
+  --ux-map-ink: #161616;
+  --ux-map-ink-soft: #3f3f3f;
+  --ux-map-goal: #b1f2bc;
+  --ux-map-step: #98c9f3;
+  --ux-map-story-border: #e0aa00;
+  --ux-map-painpoint: #ffd348;
+  --ux-map-radius-xl: 34px;
+  --ux-map-radius-lg: 28px;
+  --ux-map-radius-md: 22px;
+  --ux-map-shadow-soft: 0 10px 24px rgba(52, 41, 16, 0.05);
+  --ux-map-shadow-warm: 0 12px 26px rgba(238, 187, 32, 0.14);
+  margin-top: 1rem;
+  font-family: "Chalkboard SE", "Marker Felt", "Comic Sans MS", "Segoe Print", "Bradley Hand", cursive;
+}
+
+.ux-story-map-view .block-language-dataviewjs {
+  background: transparent;
+  padding: 0;
+}
+
+.ux-story-map-board {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.25rem;
+  overflow-x: auto;
+  padding: 0.5rem 0 2rem;
+}
+
+.ux-story-map__activity {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: max-content;
+  min-width: 320px;
+}
+
+.ux-story-map__steps {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(290px, 1fr);
+  gap: 1.15rem;
+  align-items: start;
+  width: max-content;
+}
+
+.ux-story-map__activity-header,
+.ux-story-map__step-header,
+.ux-story-map__task-header,
+.ux-story-map__painpoint-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.ux-story-map__activity-header-track,
+.ux-story-map__step-header {
+  justify-content: center;
+  min-height: 86px;
+  padding: 0.35rem 0.75rem;
+  border: 0;
+  border-radius: var(--ux-map-radius-xl);
+  box-shadow: var(--ux-map-shadow-soft);
+  text-align: center;
+}
+
+.ux-story-map__activity-header-track {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 4;
+  background: var(--ux-map-goal);
+}
+
+.ux-story-map__activity-header {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: max-content;
+  max-width: calc(100% - 1.5rem);
+  transform: translateY(-50%);
+}
+
+.ux-story-map__activity-header > .internal-link,
+.ux-story-map__step-header > .internal-link,
+.ux-story-map__task-header > .internal-link,
+.ux-story-map__painpoint-title > .internal-link {
+  color: var(--ux-map-ink);
+  text-decoration: none;
+  text-shadow: 0 0 0.01px currentColor;
+}
+
+.ux-story-map__activity-header > .internal-link,
+.ux-story-map__step-header > .internal-link {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.ux-story-map__step {
+  flex: 0 0 290px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  width: 290px;
+}
+
+.ux-story-map__step:nth-child(odd) .ux-story-map__step-header {
+  transform: none;
+}
+
+.ux-story-map__step:nth-child(even) .ux-story-map__step-header {
+  transform: none;
+}
+
+.ux-story-map__step-header {
+  min-height: 92px;
+  background: var(--ux-map-step);
+}
+
+.ux-story-map__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.ux-story-map__task {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 120px;
+  padding: 0.35rem 0.65rem 0.45rem;
+  border: 3px solid var(--ux-map-story-border);
+  border-radius: 32px;
+  background: var(--ux-map-paper);
+  box-shadow: var(--ux-map-shadow-soft);
+}
+
+.ux-story-map__task.has-no-painpoints {
+  gap: 0;
+  min-height: 0;
+  padding-top: 0.2rem;
+  padding-bottom: 0.25rem;
+}
+
+.ux-story-map__task:nth-child(odd) {
+  transform: none;
+}
+
+.ux-story-map__task:nth-child(even) {
+  transform: none;
+}
+
+.ux-story-map__task-header {
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.12rem;
+  text-align: center;
+}
+
+.ux-story-map__task-header > .internal-link {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.ux-story-map__painpoints {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ux-story-map__painpoint {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.45rem 0.8rem;
+  border: 0;
+  border-radius: var(--ux-map-radius-lg);
+  background: linear-gradient(180deg, #ffd95c 0%, var(--ux-map-painpoint) 100%);
+  box-shadow: var(--ux-map-shadow-warm);
+  text-align: center;
+}
+
+.ux-story-map__painpoint-title > .internal-link {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.ux-story-map__painpoint-body {
+  color: var(--ux-map-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.ux-story-map__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.25rem;
+  padding: 0.08rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--ux-map-ink-soft);
+  border: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.ux-story-map__badge.is-activity,
+.ux-story-map__badge.is-step {
+  display: none;
+}
+
+.ux-story-map__painpoint-meta {
+  justify-content: center;
+}
+
+.ux-story-map__empty {
+  padding: 0.45rem 0.8rem;
+  border: 2px dashed color-mix(in srgb, var(--ux-map-story-border) 86%, white 14%);
+  border-radius: var(--ux-map-radius-md);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--ux-map-ink-soft);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .ux-story-map-board {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  .ux-story-map__activity {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .ux-story-map__steps {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    width: 100%;
+  }
+
+  .ux-story-map__step {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+  }
+}
