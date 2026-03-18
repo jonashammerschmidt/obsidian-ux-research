@@ -33,6 +33,8 @@ Do not hardcode one fixed UX workflow or taxonomy.
 ### Entities
 
 - `Painpoint`
+- `Symptom`
+- `Root Cause`
 - `Solution`
 - `Activity`
 - `Step`
@@ -41,6 +43,8 @@ Do not hardcode one fixed UX workflow or taxonomy.
 ### Core Relationships
 
 - A `Painpoint` belongs to one `Task`
+- A `Painpoint` can relate to multiple `Symptoms`
+- A `Painpoint` can relate to multiple `Root Causes`
 - A `Solution` can solve multiple `Painpoints`
 - A `Painpoint` derives its linked `Solutions` from those `Solution` notes
 - `Activity`, `Step`, and `Task` notes form a hierarchy
@@ -58,6 +62,7 @@ Do not hardcode one fixed UX workflow or taxonomy.
 - one markdown note per entity
 - frontmatter for fields
 - links for relations
+- `Symptom.related_painpoint` and `Root Cause.related_painpoint` should point back to the owning painpoint
 - `Painpoint.task` should resolve via the numbered task file name and usually use a readable alias like `TASK: ...`
 - activity, step, and task folders/files may carry zero-padded order prefixes in the filesystem
 - structure must stay extendable

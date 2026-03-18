@@ -24,13 +24,15 @@ A flexible Obsidian vault for UX painpoint analysis, linked solution ideas, and 
 ## Overview
 
 - `00 System`: core system docs, templates, and shared DataviewJS views
-- `00 System/Templates`: templates for `Painpoint`, `Solution`, `Activity`, `Step`, and `Task` notes
-- `00 System/views`: shared rendering logic for backlog, relationship, and user-story-map views
+- `00 System/Templates`: templates for `Painpoint`, `Symptom`, `Root Cause`, `Solution`, `Activity`, `Step`, and `Task` notes
+- `00 System/views`: shared rendering logic for backlog, relationship, problem-analysis, and user-story-map views
 - `01 Story Nodes/Activities/Activities.md`: optional root note for the activity collection
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Activity - Title>.md`: one folder-note per activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`: one folder-note per step inside its activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`: task files directly inside their parent step folder
 - `02 Problem Analysis/01 Painpoints`: central UX painpoints
+- `02 Problem Analysis/02 Symptoms`: observable symptoms linked from painpoints
+- `02 Problem Analysis/03 Root Causes`: underlying causes linked from painpoints
 - `03 Solutions/Solution - ....md`: one markdown note per solution idea
 - `90 Views/User Story Map View.md`: current dashboard note for browsing the activity-step-task hierarchy with optional painpoints
 
@@ -42,6 +44,8 @@ The current vault state ships one ready-made dashboard note in `90 Views`. Addit
 
 - `Painpoint` is the central entity and lives in `02 Problem Analysis/01 Painpoints`.
 - Every painpoint belongs to exactly one task via the `task` field.
+- Painpoints can additionally link related `symptoms` and `root_causes`.
+- `Symptom` and `Root Cause` notes store the inverse `related_painpoint` link.
 - `Solution` notes live in `03 Solutions` and own the editable `solves` links to one or more painpoints.
 - `Painpoint` notes derive their related solutions from those `Solution.solves` links.
 - `Activity`, `Step`, and `Task` notes use `entity_type: activity|step|task`; hierarchy and ordering are derived from the folder structure and filename prefixes.
@@ -50,6 +54,7 @@ The current vault state ships one ready-made dashboard note in `90 Views`. Addit
 
 - Use `Metadata Menu` for relation fields like `task` and `solves`. They are preconfigured as searchable `File` or `MultiFile` fields with filtered suggestions.
 - Keep `Painpoint.task` in the numbered short-link format, for example `"[[01 - Task - Programm wählen|TASK: Programm wählen]]"`.
+- Link symptoms and root causes from the painpoint note, and keep the inverse `related_painpoint` field aligned on the symptom/root-cause note.
 - Maintain solution links exclusively from solution notes via `solves`. Painpoint notes render the matching solutions as a read-only Dataview list.
 - Keep descriptions in the note body instead of frontmatter fields.
 - Keep activity, step, and task files in the expected folder-note layout, because hierarchy and ordering are resolved from their folders and filename prefixes.

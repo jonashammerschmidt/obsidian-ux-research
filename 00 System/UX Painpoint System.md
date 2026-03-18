@@ -20,6 +20,8 @@ This vault models UX painpoints as linked markdown entities. The schema stays fl
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`: steps stored as folder notes below their activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`: executable task nodes stored directly inside their step folder
 - `02 Problem Analysis/01 Painpoints`: central painpoint records
+- `02 Problem Analysis/02 Symptoms`: observed symptoms linked from painpoints
+- `02 Problem Analysis/03 Root Causes`: underlying causes linked from painpoints
 - `03 Solutions/Solution - ....md`: one markdown note per solution
 - `90 Views/User Story Map View.md`: current ready-made dashboard note
 
@@ -46,6 +48,10 @@ entity_type: painpoint
 schema_version: 1
 title: Passendes Programm schwer zu finden
 task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
+symptoms:
+  - [[Symptom - Längeres Vergleichen]]
+root_causes:
+  - [[Root Cause - Programmnamen sind ähnlich]]
 ```
 
 Painpoint notes render linked solutions as a read-only Dataview list:
@@ -54,6 +60,32 @@ Painpoint notes render linked solutions as a read-only Dataview list:
 LIST FROM "03 Solutions"
 WHERE contains(solves, this.file.link)
 SORT file.name ASC
+```
+
+Painpoint notes can also embed the shared problem analysis view:
+
+```dataviewjs
+await dv.view("00 System/views/problem-analysis", {
+  solutionsHeadingLevel: 3
+});
+```
+
+### Symptom
+
+```yaml
+entity_type: symptom
+schema_version: 1
+title: Symptom - Längeres Vergleichen
+related_painpoint: [[Painpoint - Passendes Programm schwer zu finden]]
+```
+
+### Root Cause
+
+```yaml
+entity_type: root_cause
+schema_version: 1
+title: Root Cause - Programmnamen sind ähnlich
+related_painpoint: [[Painpoint - Passendes Programm schwer zu finden]]
 ```
 
 ### Solution
@@ -94,11 +126,17 @@ Metadata Menu can edit all frontmatter relation fields directly. Recommended fie
 | Field | Suggested type |
 | --- | --- |
 | `task` | File |
+| `symptoms` | MultiFile |
+| `root_causes` | MultiFile |
+| `related_painpoint` | File |
 | `solves` | MultiFile |
 
 Configured relation queries currently support:
 
 - `task`: only suggests task notes
+- `symptoms`: only suggests symptom notes
+- `root_causes`: only suggests root cause notes
+- `related_painpoint`: only suggests painpoints
 - `solves`: only suggests painpoints
 
 These Metadata Menu definitions are stored in [data.json](/Users/jonas/dev/obsidian-ux-research/.obsidian/plugins/metadata-menu/data.json), so relation fields open a searchable file picker instead of relying on raw wiki-link typing.
@@ -118,6 +156,7 @@ You can add fields like `owner`, `effort`, `evidence`, `segment`, `journey_stage
 ## Entry Points
 
 - Explore hierarchy in [User Story Map View](../90%20Views/User%20Story%20Map%20View.md)
+- Reuse `00 System/views/problem-analysis/view.js` inside painpoint notes or focused analysis notes
 - Reuse `00 System/views/backlog/view.js` when you want a sortable painpoint backlog table inside another note
 - Reuse `00 System/views/relationship/view.js` when you want a relationship table for all painpoints or a focused subset
 

@@ -102,6 +102,8 @@ function shouldRefresh(file) {
   return path === viewFilePath
     || path.startsWith("01 Story Nodes/")
     || path.startsWith("02 Problem Analysis/01 Painpoints/")
+    || path.startsWith("02 Problem Analysis/02 Symptoms/")
+    || path.startsWith("02 Problem Analysis/03 Root Causes/")
     || path.startsWith("03 Solutions/");
 }
 
@@ -320,15 +322,25 @@ function renderStoryMap() {
             const painpointTitle = painpointCard.createDiv({ cls: "ux-story-map__painpoint-title" });
             createInternalLink(painpointTitle, painpoint, painpoint.title ?? painpoint.file.name);
 
-            const meta = painpointCard.createDiv({ cls: "ux-story-map__painpoint-meta" });
-            const solutionCount = solutionsFor(painpoint).length;
-            if (solutionCount > 0) {
-              appendMetaBadge(meta, `${solutionCount} solution${solutionCount === 1 ? "" : "s"}`, "is-solutions");
-            }
+          const meta = painpointCard.createDiv({ cls: "ux-story-map__painpoint-meta" });
+          const solutionCount = solutionsFor(painpoint).length;
+          if (solutionCount > 0) {
+            appendMetaBadge(meta, `${solutionCount} solution${solutionCount === 1 ? "" : "s"}`, "is-solutions");
+          }
+
+          const rootCauseCount = toArray(painpoint.root_causes).length;
+          if (rootCauseCount > 0) {
+            appendMetaBadge(meta, `${rootCauseCount} root cause${rootCauseCount === 1 ? "" : "s"}`, "is-root-causes");
+          }
+
+          const symptomCount = toArray(painpoint.symptoms).length;
+          if (symptomCount > 0) {
+            appendMetaBadge(meta, `${symptomCount} symptom${symptomCount === 1 ? "" : "s"}`, "is-symptoms");
           }
         }
       }
     }
+  }
   }
 
   if (!activityHeaders.length) {
