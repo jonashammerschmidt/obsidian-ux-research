@@ -131,7 +131,12 @@
   text-decoration: underline;
 }
 
-.ux-story-map__activity-header > .internal-link,
+.ux-story-map__activity-header > .internal-link {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
 .ux-story-map__step-header > .internal-link {
   font-size: 1rem;
   font-weight: 600;
@@ -201,7 +206,7 @@
 
 .ux-story-map__task-header > .internal-link {
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: normal;
   line-height: 1.15;
 }
 
@@ -219,7 +224,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  padding: var(--ux-map-padding);
+  padding: 
+    calc(var(--ux-map-padding) - 8px)
+    var(--ux-map-padding)
+    calc(var(--ux-map-padding) - 10px)
+    var(--ux-map-padding);
   border-radius: var(--ux-map-radius);
   background: linear-gradient(180deg, #ffd95c 0%, var(--ux-map-painpoint) 100%);
   box-shadow: var(--ux-map-shadow-warm);
@@ -228,8 +237,8 @@
 
 .ux-story-map__painpoint-title > .internal-link {
   font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.15;
+  font-weight: normal;
+  line-height: 0;
 }
 
 .ux-story-map__painpoint-body {
@@ -259,6 +268,7 @@
 
 .ux-story-map__painpoint-meta {
   justify-content: flex-start;
+  padding-bottom: 0.6rem;
 }
 
 .ux-story-map__empty {
