@@ -1,22 +1,44 @@
 {
-  "collapse-filter": true,
+  "collapse-filter": false,
   "search": "",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
-  "colorGroups": [],
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "[\"entity_type\":painpoint]",
+      "color": {
+        "a": 1,
+        "rgb": 16766011
+      }
+    },
+    {
+      "query": "[\"entity_type\":Task]",
+      "color": {
+        "a": 1,
+        "rgb": 10868991
+      }
+    },
+    {
+      "query": "[\"entity_type\":Solution]",
+      "color": {
+        "a": 1,
+        "rgb": 11727547
+      }
+    }
+  ],
   "collapse-display": true,
   "showArrow": false,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
-  "lineSizeMultiplier": 1,
+  "nodeSizeMultiplier": 1.50236979166667,
+  "lineSizeMultiplier": 2.49640625,
   "collapse-forces": true,
   "centerStrength": 0.518713248970312,
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 1,
-  "close": true
+  "scale": 0.40130970982345987,
+  "close": false
 }
