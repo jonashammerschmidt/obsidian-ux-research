@@ -1,6 +1,5 @@
 > [!settings]- View State
-> show_empty_tasks:: true
-> show_painpoints:: true
+> hide_painpoints:: false
 > hide_tasks_without_painpoints:: false
 
 ```dataviewjs

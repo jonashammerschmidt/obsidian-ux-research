@@ -6,13 +6,13 @@
   --ux-map-step: #98c9f3;
   --ux-map-story-border: #e0aa00;
   --ux-map-painpoint: #ffd348;
-  --ux-map-radius-xl: 34px;
-  --ux-map-radius-lg: 28px;
-  --ux-map-radius-md: 22px;
+  --ux-map-radius: 4px;
+  --ux-map-padding: 12px;
+  --ux-map-gap: 12px;
   --ux-map-shadow-soft: 0 10px 24px rgba(52, 41, 16, 0.05);
   --ux-map-shadow-warm: 0 12px 26px rgba(238, 187, 32, 0.14);
   margin-top: 1rem;
-  font-family: "Chalkboard SE", "Marker Felt", "Comic Sans MS", "Segoe Print", "Bradley Hand", cursive;
+  font-family: inherit;
 }
 
 .ux-story-map-view .block-language-dataviewjs {
@@ -23,7 +23,7 @@
 .ux-story-map-surface {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: var(--ux-map-gap);
 }
 
 .ux-story-map__controls {
@@ -38,7 +38,7 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.35rem 0.7rem;
-  border-radius: 999px;
+  border-radius: var(--ux-map-radius);
   background: rgba(255, 255, 255, 0.72);
   box-shadow: var(--ux-map-shadow-soft);
   color: var(--ux-map-ink);
@@ -54,16 +54,16 @@
 .ux-story-map-board {
   display: flex;
   align-items: flex-start;
-  gap: 2.25rem;
+  gap: var(--ux-map-gap);
   overflow-x: auto;
-  padding: 0.5rem 0 2rem;
+  padding: 0.25rem 0 1rem;
 }
 
 .ux-story-map__activity {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 0;
   width: max-content;
   min-width: 320px;
 }
@@ -72,8 +72,9 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(290px, 1fr);
-  gap: 1.15rem;
+  gap: var(--ux-map-gap);
   align-items: start;
+  margin-top: var(--ux-map-gap);
   width: max-content;
 }
 
@@ -90,17 +91,16 @@
 .ux-story-map__activity-header-track,
 .ux-story-map__step-header {
   justify-content: center;
-  min-height: 86px;
-  padding: 0.35rem 0.75rem;
-  border: 0;
-  border-radius: var(--ux-map-radius-xl);
+  min-height: 56px;
+  padding: var(--ux-map-padding);
+  border-radius: var(--ux-map-radius);
   box-shadow: var(--ux-map-shadow-soft);
   text-align: center;
 }
 
 .ux-story-map__activity-header-track {
   position: sticky;
-  top: 0.75rem;
+  top: 0;
   z-index: 4;
   background: var(--ux-map-goal);
 }
@@ -110,7 +110,7 @@
   top: 50%;
   left: 0;
   width: max-content;
-  max-width: calc(100% - 1.5rem);
+  max-width: calc(100% - 24px);
   transform: translateY(-50%);
 }
 
@@ -123,10 +123,18 @@
   text-shadow: 0 0 0.01px currentColor;
 }
 
+.ux-story-map__activity-header > .internal-link:hover,
+.ux-story-map__step-header > .internal-link:hover,
+.ux-story-map__task-header > .internal-link:hover,
+.ux-story-map__painpoint-title > .internal-link:hover {
+  color: var(--ux-map-ink);
+  text-decoration: underline;
+}
+
 .ux-story-map__activity-header > .internal-link,
 .ux-story-map__step-header > .internal-link {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   line-height: 1.15;
 }
 
@@ -134,7 +142,7 @@
   flex: 0 0 290px;
   display: flex;
   flex-direction: column;
-  gap: 0.95rem;
+  gap: var(--ux-map-gap);
   width: 290px;
 }
 
@@ -147,24 +155,24 @@
 }
 
 .ux-story-map__step-header {
-  min-height: 92px;
+  min-height: 56px;
   background: var(--ux-map-step);
 }
 
 .ux-story-map__tasks {
   display: flex;
   flex-direction: column;
-  gap: 0.95rem;
+  gap: var(--ux-map-gap);
 }
 
 .ux-story-map__task {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  min-height: 120px;
-  padding: 0.35rem 0.65rem 0.45rem;
+  gap: 0.75rem;
+  min-height: 0;
+  padding: var(--ux-map-padding);
   border: 3px solid var(--ux-map-story-border);
-  border-radius: 32px;
+  border-radius: var(--ux-map-radius);
   background: var(--ux-map-paper);
   box-shadow: var(--ux-map-shadow-soft);
 }
@@ -172,8 +180,8 @@
 .ux-story-map__task.has-no-painpoints {
   gap: 0;
   min-height: 0;
-  padding-top: 0.2rem;
-  padding-bottom: 0.25rem;
+  padding-top: var(--ux-map-padding);
+  padding-bottom: var(--ux-map-padding);
 }
 
 .ux-story-map__task:nth-child(odd) {
@@ -187,37 +195,40 @@
 .ux-story-map__task-header {
   flex-direction: column;
   justify-content: center;
-  gap: 0.12rem;
+  gap: 0.2rem;
   text-align: center;
 }
 
 .ux-story-map__task-header > .internal-link {
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
   line-height: 1.15;
+}
+
+.ux-story-map__task-header > .ux-story-map__badge {
+  align-self: center;
 }
 
 .ux-story-map__painpoints {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .ux-story-map__painpoint {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  padding: 0.45rem 0.8rem;
-  border: 0;
-  border-radius: var(--ux-map-radius-lg);
+  padding: var(--ux-map-padding);
+  border-radius: var(--ux-map-radius);
   background: linear-gradient(180deg, #ffd95c 0%, var(--ux-map-painpoint) 100%);
   box-shadow: var(--ux-map-shadow-warm);
-  text-align: center;
+  text-align: left;
 }
 
 .ux-story-map__painpoint-title > .internal-link {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
   line-height: 1.15;
 }
 
@@ -232,11 +243,10 @@
   align-items: center;
   justify-content: center;
   min-height: 1.25rem;
-  padding: 0.08rem 0.5rem;
-  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--ux-map-radius);
   background: rgba(255, 255, 255, 0.45);
   color: var(--ux-map-ink-soft);
-  border: 0;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -248,17 +258,17 @@
 }
 
 .ux-story-map__painpoint-meta {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .ux-story-map__empty {
-  padding: 0.45rem 0.8rem;
+  padding: var(--ux-map-padding);
   border: 2px dashed color-mix(in srgb, var(--ux-map-story-border) 86%, white 14%);
-  border-radius: var(--ux-map-radius-md);
+  border-radius: var(--ux-map-radius);
   background: rgba(255, 255, 255, 0.75);
   color: var(--ux-map-ink-soft);
   font-size: 0.9rem;
-  text-align: center;
+  text-align: left;
 }
 
 @media (max-width: 960px) {

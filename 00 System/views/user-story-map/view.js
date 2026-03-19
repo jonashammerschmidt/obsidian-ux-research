@@ -87,9 +87,12 @@ function currentPage() {
 }
 
 function persistedState(page) {
+  const hidePainpoints = options.hidePainpoints
+    ?? page.hide_painpoints
+    ?? (page.show_painpoints != null ? page.show_painpoints === false : false);
+
   return {
-    showEmptyTasks: options.showEmptyTasks ?? page.show_empty_tasks !== false,
-    showPainpoints: options.showPainpoints ?? page.show_painpoints !== false,
+    hidePainpoints,
     hideTasksWithoutPainpoints: options.hideTasksWithoutPainpoints ?? page.hide_tasks_without_painpoints === true
   };
 }
@@ -120,8 +123,7 @@ async function persistState(nextState) {
   }
 
   const values = {
-    show_empty_tasks: nextState.showEmptyTasks,
-    show_painpoints: nextState.showPainpoints,
+    hide_painpoints: nextState.hidePainpoints,
     hide_tasks_without_painpoints: nextState.hideTasksWithoutPainpoints
   };
 
@@ -154,8 +156,7 @@ function renderStoryMap() {
 
   const current = currentPage();
   const state = viewState ?? persistedState(current);
-  const showEmptyTasks = state.showEmptyTasks;
-  const showPainpoints = state.showPainpoints;
+  const hidePainpoints = state.hidePainpoints;
   const hideTasksWithoutPainpoints = state.hideTasksWithoutPainpoints;
   const nodeTypes = new Set(["activity", "step", "task"]);
   const nodes = dv.pages('"01 Story Nodes"').where(page => nodeTypes.has((page.entity_type ?? "").toLowerCase()));
@@ -183,8 +184,7 @@ function renderStoryMap() {
     field.createSpan({ text: label, cls: "ux-story-map__control-label" });
   }
 
-  appendToggle({ key: "showEmptyTasks", label: "Show Empty Tasks", checked: showEmptyTasks });
-  appendToggle({ key: "showPainpoints", label: "Show Painpoints", checked: showPainpoints });
+  appendToggle({ key: "hidePainpoints", label: "Hide Painpoints", checked: hidePainpoints });
   appendToggle({
     key: "hideTasksWithoutPainpoints",
     label: "Hide Tasks Without Painpoints",
@@ -293,8 +293,7 @@ function renderStoryMap() {
 
       for (const task of tasks) {
         const relatedPainpoints = painpointsFor(task);
-        const shouldHideEmptyTask = relatedPainpoints.length === 0
-          && (hideTasksWithoutPainpoints || (showPainpoints && !showEmptyTasks));
+        const shouldHideEmptyTask = relatedPainpoints.length === 0 && hideTasksWithoutPainpoints;
 
         if (shouldHideEmptyTask) {
           continue;
@@ -308,11 +307,11 @@ function renderStoryMap() {
         const taskHeader = taskCard.createDiv({ cls: "ux-story-map__task-header" });
         createInternalLink(taskHeader, task, task.title ?? task.file.name);
 
-        if (showPainpoints) {
+        if (!hidePainpoints) {
           appendMetaBadge(taskHeader, `${relatedPainpoints.length} painpoint${relatedPainpoints.length === 1 ? "" : "s"}`);
         }
 
-        if (showPainpoints && relatedPainpoints.length) {
+        if (!hidePainpoints && relatedPainpoints.length) {
           const painpointList = taskCard.createDiv({ cls: "ux-story-map__painpoints" });
 
           for (const painpoint of relatedPainpoints) {
@@ -348,8 +347,45 @@ function renderStoryMap() {
 
     frameId = window.requestAnimationFrame(() => {
       frameId = null;
+      normalizeColumnHeights();
       positionActivityHeaders();
     });
+  }
+
+  function measureBoxHeight(element, fallback = 0) {
+    if (!element) {
+      return fallback;
+    }
+
+    element.style.height = "";
+    element.style.minHeight = "";
+    return Math.max(element.getBoundingClientRect().height, element.scrollHeight, fallback);
+  }
+
+  function normalizeColumnHeights() {
+    let tallestActivityHeight = 0;
+
+    for (const { track } of activityHeaders) {
+      tallestActivityHeight = Math.max(tallestActivityHeight, measureBoxHeight(track, 56));
+    }
+
+    for (const { track } of activityHeaders) {
+      track.style.height = `${tallestActivityHeight}px`;
+    }
+
+    const activityColumns = Array.from(board.querySelectorAll(".ux-story-map__activity"));
+    for (const column of activityColumns) {
+      const stepHeaders = Array.from(column.querySelectorAll(":scope > .ux-story-map__steps > .ux-story-map__step > .ux-story-map__step-header"));
+      let tallestStepHeight = 0;
+
+      for (const header of stepHeaders) {
+        tallestStepHeight = Math.max(tallestStepHeight, measureBoxHeight(header, 56));
+      }
+
+      for (const header of stepHeaders) {
+        header.style.minHeight = `${tallestStepHeight}px`;
+      }
+    }
   }
 
   function positionActivityHeaders() {
