@@ -6,16 +6,20 @@ A flexible Obsidian vault for UX painpoint analysis, linked solution ideas, and 
 
 1. Copy or clone this repo into your Obsidian vaults folder.
 2. Open the folder as a vault in Obsidian.
-3. Install and enable the community plugins `Dataview`, `Kanban`, and `Metadata Menu`.
-4. Apply the settings below.
+3. Install and enable the following community plugins:
+    - Dataview
+    - Folder Note (**NOT** Folder Notes)
+    - Kanban
+    - Metadata Menu
+4. (Optional) Install and enable the following recommended community plugins:
+    - Advanced Tables
+    - Code Editor Shortcuts
+    - Excalidraw
+    - Omnisearch
 5. Restart Obsidian
-
-## Settings
-
-- `Settings -> Editor -> Readable line length`: off
-- `Settings -> Community plugins -> Dataview -> JavaScript queries`: on
-- `Settings -> Community plugins -> Dataview -> Inline JavaScript queries`: on
-- `Settings -> Appearance -> CSS snippets -> ux-story-map`: on
+6. Apply these settings
+    - `Settings -> Editor -> Display -> Readable line length`: off
+7. Restart Obsidian
 
 ## Overview
 
