@@ -45,7 +45,7 @@ The current vault state ships one ready-made dashboard note in `90 Views`. Addit
 ## Editing Workflow
 
 - Use `Metadata Menu` for relation fields like `task` and `solves`. They are preconfigured as searchable `File` or `MultiFile` fields with filtered suggestions.
-- Keep `Painpoint.task` in the numbered short-link format, for example `"[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"`.
+- Keep `Painpoint.task` in the numbered short-link format, for example `"[[01 - Task - Programm wählen|TASK: Programm wählen]]"`.
 - Maintain solution links exclusively from solution notes via `solves`. Painpoint notes render the matching solutions as a read-only Dataview list.
 - Keep descriptions in the note body instead of frontmatter fields.
 - Keep activity, step, and task files in the expected folder-note layout, because hierarchy and ordering are resolved from their folders and filename prefixes.

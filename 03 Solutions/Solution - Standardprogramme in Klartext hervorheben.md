@@ -6,6 +6,6 @@ solves:
   - "[[Painpoint - Passendes Programm schwer zu finden]]"
 ---
 
-Die wichtigsten Programme werden mit Klartext und den auffaelligsten Unterschieden sichtbar gemacht.
+Die wichtigsten Programme werden mit Klartext und den auffälligsten Unterschieden sichtbar gemacht.
 
 Die Auswahl wird auf wenige gut erkennbare Optionen verdichtet.

@@ -2,12 +2,12 @@
 entity_type: painpoint
 schema_version: 1
 title: Passendes Programm schwer zu finden
-task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
+task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
 ---
 
-Beim Starten ist nicht klar, welches Programm fuer die aktuelle Waesche am besten geeignet ist.
+Beim Starten ist nicht klar, welches Programm für die aktuelle Wäsche am besten geeignet ist.
 
-Die Programmauswahl ist kognitiv unnoetig aufwendig.
+Die Programmauswahl ist kognitiv unnötig aufwendig.
 
 ## Related Solutions
 

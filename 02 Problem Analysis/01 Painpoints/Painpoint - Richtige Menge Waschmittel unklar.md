@@ -5,9 +5,9 @@ title: Richtige Menge Waschmittel unklar
 task: "[[01 - Task - Waschmittel dosieren|TASK: Waschmittel dosieren]]"
 ---
 
-Vor dem Einfuellen ist unsicher, wie viel Waschmittel fuer die aktuelle Ladung passend ist.
+Vor dem Einfüllen ist unsicher, wie viel Waschmittel für die aktuelle Ladung passend ist.
 
-Die Dosierentscheidung kostet unnoetig Zeit.
+Die Dosierentscheidung kostet unnötig Zeit.
 
 ## Related Solutions
 

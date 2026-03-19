@@ -4,4 +4,4 @@ schema_version: 1
 title: Maschine beladen
 ---
 
-Waschmittel und Waesche kommen in die Maschine.
+Waschmittel und Wäsche kommen in die Maschine.

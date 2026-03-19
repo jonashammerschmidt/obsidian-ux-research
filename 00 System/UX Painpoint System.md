@@ -45,7 +45,7 @@ Required properties:
 entity_type: painpoint
 schema_version: 1
 title: Passendes Programm schwer zu finden
-task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
+task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
 ```
 
 Painpoint notes render linked solutions as a read-only Dataview list:
@@ -66,7 +66,7 @@ schema_version: 1
 title: Solution - Standardprogramme in Klartext hervorheben
 solves:
   - "[[Painpoint - Passendes Programm schwer zu finden]]"
-  - "[[Painpoint - Waschmittelfach ist schwer verstaendlich]]"
+  - "[[Painpoint - Waschmittelfach ist schwer verständlich]]"
 ```
 
 ### Activity / Step / Task
@@ -74,7 +74,7 @@ solves:
 ```yaml
 entity_type: task
 schema_version: 1
-title: Programm waehlen
+title: Programm wählen
 ```
 
 For activity, step, and task notes, `entity_type` is the node level: `activity`, `step`, or `task`. Parent-child relationships are derived from the folder structure, and ordering comes from the numeric filename prefixes.
@@ -106,7 +106,7 @@ These Metadata Menu definitions are stored in [data.json](/Users/jonas/dev/obsid
 For `Painpoint.task`, keep the saved link short and aligned with the numbered task filename:
 
 ```yaml
-task: "[[01 - Task - Programm waehlen|TASK: Programm waehlen]]"
+task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
 ```
 
 Activity, step, and task notes do not need saved parent links as long as the current folder hierarchy is preserved.

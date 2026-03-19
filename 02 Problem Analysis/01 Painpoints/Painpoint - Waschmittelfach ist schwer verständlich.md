@@ -1,11 +1,11 @@
 ---
 entity_type: painpoint
 schema_version: 1
-title: Waschmittelfach ist schwer verstaendlich
+title: Waschmittelfach ist schwer verständlich
 task: "[[01 - Task - Waschmittel dosieren|TASK: Waschmittel dosieren]]"
 ---
 
-Die Einfaecherung der Mittel ist nicht selbsterklaerend, sodass leicht das falsche Fach benutzt wird.
+Die Einfächerung der Mittel ist nicht selbsterklärend, sodass leicht das falsche Fach benutzt wird.
 
 Die Fachlogik ist nicht sofort nachvollziehbar.
 

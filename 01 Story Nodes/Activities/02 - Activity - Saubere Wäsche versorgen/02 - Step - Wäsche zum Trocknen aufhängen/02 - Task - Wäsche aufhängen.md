@@ -1,7 +1,7 @@
 ---
 entity_type: task
 schema_version: 1
-title: Waesche aufhaengen
+title: Wäsche aufhängen
 ---
 
 Die Teile werden platzsparend und luftig verteilt.
