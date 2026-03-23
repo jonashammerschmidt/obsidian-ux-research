@@ -82,6 +82,28 @@ function appendMetaBadge(parent, text, cls) {
   return badge;
 }
 
+function normalizedTag(tag) {
+  const value = String(tag ?? "").trim();
+  if (!value) {
+    return "";
+  }
+
+  return value.startsWith("#") ? value : `#${value}`;
+}
+
+function tagsFor(page) {
+  const uniqueTags = new Set();
+
+  for (const tag of toArray(page?.file?.tags)) {
+    const normalized = normalizedTag(tag);
+    if (normalized) {
+      uniqueTags.add(normalized);
+    }
+  }
+
+  return Array.from(uniqueTags).sort((left, right) => left.localeCompare(right));
+}
+
 function currentPage() {
   return dv.page(viewFilePath) ?? initialCurrent;
 }
@@ -321,6 +343,10 @@ function renderStoryMap() {
             createInternalLink(painpointTitle, painpoint, painpoint.title ?? painpoint.file.name);
 
             const meta = painpointCard.createDiv({ cls: "ux-story-map__painpoint-meta" });
+            for (const tag of tagsFor(painpoint)) {
+              appendMetaBadge(meta, tag, "is-tag");
+            }
+
             const solutionCount = solutionsFor(painpoint).length;
             if (solutionCount > 0) {
               appendMetaBadge(meta, `${solutionCount} solution${solutionCount === 1 ? "" : "s"}`, "is-solutions");

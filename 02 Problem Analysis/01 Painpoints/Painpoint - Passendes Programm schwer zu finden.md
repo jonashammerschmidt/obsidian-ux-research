@@ -3,6 +3,8 @@ entity_type: painpoint
 schema_version: 1
 title: Passendes Programm schwer zu finden
 task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
+tags:
+  - waesche-knowhow
 ---
 
 Beim Starten ist nicht klar, welches Programm für die aktuelle Wäsche am besten geeignet ist.

@@ -3,6 +3,8 @@ entity_type: painpoint
 schema_version: 1
 title: Richtige Menge Waschmittel unklar
 task: "[[01 - Task - Waschmittel dosieren|TASK: Waschmittel dosieren]]"
+tags:
+  - waesche-knowhow
 ---
 
 Vor dem Einfüllen ist unsicher, wie viel Waschmittel für die aktuelle Ladung passend ist.
