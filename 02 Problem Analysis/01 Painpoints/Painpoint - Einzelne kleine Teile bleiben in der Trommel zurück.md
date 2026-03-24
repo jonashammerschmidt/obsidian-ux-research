@@ -3,6 +3,7 @@ entity_type: painpoint
 schema_version: 1
 title: Einzelne kleine Teile bleiben in der Trommel zurück
 task: "[[02 - Task - Nasse Wäsche herausnehmen|TASK: Nasse Wäsche herausnehmen]]"
+painpoint_cluster: "[[Painpoint Cluster - Handhabung der Teile|CLUSTER: Praktische Handhabung]]"
 ---
 
 Beim Entladen werden kleine Teile leicht übersehen und bleiben in der Maschine liegen.

@@ -3,6 +3,7 @@ entity_type: painpoint
 schema_version: 1
 title:
 task:
+painpoint_cluster:
 ---
 
 > Describe the painpoint here.

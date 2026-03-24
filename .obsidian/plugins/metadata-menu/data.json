@@ -12,6 +12,17 @@
       }
     },
     {
+      "id": "painpoint_cluster",
+      "name": "painpoint_cluster",
+      "type": "File",
+      "path": "",
+      "options": {
+        "dvQueryString": "dv.pages().where(p => (p.entity_type ?? \"\").toLowerCase() === \"painpoint_cluster\")",
+        "customRendering": "`${((page.entity_type ?? \"painpoint_cluster\") + \"\").replace(/_/g, \" \").toUpperCase()}: ${(page.title ?? page.file.name).replace(/^Painpoint Cluster\\s*-\\s*/i, \"\")}`",
+        "customSorting": "(a.basename ?? \"\").localeCompare(b.basename ?? \"\")"
+      }
+    },
+    {
       "id": "solves",
       "name": "solves",
       "type": "Multi",

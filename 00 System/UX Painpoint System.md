@@ -20,6 +20,7 @@ This vault models UX painpoints as linked markdown entities. The schema stays fl
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Step - Title>.md`: steps stored as folder notes below their activity
 - `01 Story Nodes/Activities/<NN - Activity - Title>/<NN - Step - Title>/<NN - Task - Title>.md`: executable task nodes stored directly inside their step folder
 - `02 Problem Analysis/01 Painpoints`: central painpoint records
+- `02 Problem Analysis/02 Painpoint Clusters`: reusable painpoint cluster definitions
 - `03 Solutions/Solution - ....md`: one markdown note per solution
 - `90 Views/User Story Map View.md`: current ready-made dashboard note
 
@@ -46,6 +47,7 @@ entity_type: painpoint
 schema_version: 1
 title: Passendes Programm schwer zu finden
 task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
+painpoint_cluster: "[[Painpoint Cluster - Wäsche-Knowhow|CLUSTER: Wäsche-Knowhow]]"
 ```
 
 Painpoint notes render linked solutions as a read-only Dataview list:
@@ -53,6 +55,27 @@ Painpoint notes render linked solutions as a read-only Dataview list:
 ```dataview
 LIST FROM "03 Solutions"
 WHERE contains(solves, this.file.link)
+SORT file.name ASC
+```
+
+`painpoint_cluster` is optional and points to one cluster note.
+
+### Painpoint Cluster
+
+Painpoint clusters own grouping and explicit display order for views.
+
+```yaml
+entity_type: painpoint_cluster
+schema_version: 1
+title: Wäsche-Knowhow
+order: 1
+```
+
+Cluster notes render their linked painpoints as a read-only Dataview list:
+
+```dataview
+LIST FROM "02 Problem Analysis/01 Painpoints"
+WHERE painpoint_cluster = this.file.link
 SORT file.name ASC
 ```
 
@@ -83,6 +106,7 @@ For activity, step, and task notes, `entity_type` is the node level: `activity`,
 
 - Story node files and folder notes: `NN - Activity - ...`, `NN - Step - ...`, `NN - Task - ...`
 - Painpoints: `Painpoint - ...`
+- Painpoint clusters: `Painpoint Cluster - ...`
 - Solutions: `Solution - ...`
 
 This keeps links readable and makes folder scanning predictable. Activity folders, step folders, and task files carry the numeric prefixes that define their order in views.
@@ -94,11 +118,13 @@ Metadata Menu can edit all frontmatter relation fields directly. Recommended fie
 | Field | Suggested type |
 | --- | --- |
 | `task` | File |
+| `painpoint_cluster` | File |
 | `solves` | MultiFile |
 
 Configured relation queries currently support:
 
 - `task`: only suggests task notes
+- `painpoint_cluster`: only suggests painpoint cluster notes
 - `solves`: only suggests painpoints
 
 These Metadata Menu definitions are stored in [data.json](/Users/jonas/dev/obsidian-ux-research/.obsidian/plugins/metadata-menu/data.json), so relation fields open a searchable file picker instead of relying on raw wiki-link typing.
@@ -109,7 +135,15 @@ For `Painpoint.task`, keep the saved link short and aligned with the numbered ta
 task: "[[01 - Task - Programm wählen|TASK: Programm wählen]]"
 ```
 
+For `Painpoint.painpoint_cluster`, keep the saved link readable and cluster-oriented:
+
+```yaml
+painpoint_cluster: "[[Painpoint Cluster - Wäsche-Knowhow|CLUSTER: Wäsche-Knowhow]]"
+```
+
 Activity, step, and task notes do not need saved parent links as long as the current folder hierarchy is preserved.
+
+Painpoint clustering now replaces the earlier ad-hoc tag usage. Views such as the user story map should read cluster relations from the `painpoint_cluster` link instead of from note tags.
 
 ## Extension Strategy
 

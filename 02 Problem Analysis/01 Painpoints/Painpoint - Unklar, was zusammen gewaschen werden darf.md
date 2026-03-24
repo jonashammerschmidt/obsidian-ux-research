@@ -3,8 +3,7 @@ entity_type: painpoint
 schema_version: 1
 title: Unklar, was zusammen gewaschen werden darf
 task: "[[02 - Task - Wäsche sortieren|TASK: Wäsche sortieren]]"
-tags:
-  - waesche-knowhow
+painpoint_cluster: "[[Painpoint Cluster - Wäsche-Knowhow|CLUSTER: Wäsche-Knowhow]]"
 ---
 
 Beim Sortieren ist nicht sofort klar, welche Kleidungsstücke zusammen in einen Waschgang gehören.

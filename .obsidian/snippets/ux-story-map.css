@@ -51,6 +51,16 @@
   margin: 0;
 }
 
+.ux-story-map__control-select {
+  border: 0;
+  background: transparent;
+  color: var(--ux-map-ink);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  outline: none;
+}
+
 .ux-story-map-board {
   display: flex;
   align-items: flex-start;
@@ -269,6 +279,43 @@
 .ux-story-map__painpoint-meta {
   justify-content: flex-start;
   padding-bottom: 0.6rem;
+}
+
+.ux-story-map__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.25rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--ux-map-radius);
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--ux-map-ink-soft);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.ux-story-map__meta-item > .internal-link {
+  color: var(--ux-map-ink);
+  text-decoration: none;
+}
+
+.ux-story-map__meta-item > .internal-link:hover {
+  color: var(--ux-map-ink);
+  text-decoration: underline;
+}
+
+.ux-story-map__meta-item.is-cluster {
+  background: rgba(255, 249, 213, 0.78);
+}
+
+.ux-story-map__meta-item.is-cluster > .internal-link {
+  font-weight: 700;
+}
+
+.ux-story-map__meta-label {
+  color: var(--ux-map-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .ux-story-map__empty {

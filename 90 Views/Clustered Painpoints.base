@@ -1,0 +1,24 @@
+formulas:
+  painpoint_cluster_order: file(painpoint_cluster).properties.order
+properties:
+  formula.painpoint_cluster_order:
+    displayName: painpoint_cluster_order
+views:
+  - type: table
+    name: Table
+    filters:
+      and:
+        - "!painpoint_cluster.isEmpty()"
+    order:
+      - file.name
+      - painpoint_cluster
+      - formula.painpoint_cluster_order
+    sort:
+      - property: formula.painpoint_cluster_order
+        direction: ASC
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 439
+      note.painpoint_cluster: 227
+      formula.painpoint_cluster_order: 200

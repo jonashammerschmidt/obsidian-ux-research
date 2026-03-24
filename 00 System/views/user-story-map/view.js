@@ -12,7 +12,13 @@ container.classList.add("ux-story-map-view");
 const surface = container.createDiv({ cls: "ux-story-map-surface" });
 let layoutCleanup = () => {};
 let renderFrame = null;
-let viewState = null;
+let viewState = container.__uxStoryMapState ?? null;
+
+function setViewState(nextState) {
+  viewState = nextState;
+  container.__uxStoryMapState = nextState;
+  return viewState;
+}
 
 function cleanedCandidate(value) {
   if (value == null) {
@@ -82,26 +88,14 @@ function appendMetaBadge(parent, text, cls) {
   return badge;
 }
 
-function normalizedTag(tag) {
-  const value = String(tag ?? "").trim();
-  if (!value) {
-    return "";
+function appendMetaLink(parent, page, cls) {
+  const item = parent.createDiv({ cls: "ux-story-map__meta-item" });
+  if (cls) {
+    item.addClass(cls);
   }
 
-  return value.startsWith("#") ? value : `#${value}`;
-}
-
-function tagsFor(page) {
-  const uniqueTags = new Set();
-
-  for (const tag of toArray(page?.file?.tags)) {
-    const normalized = normalizedTag(tag);
-    if (normalized) {
-      uniqueTags.add(normalized);
-    }
-  }
-
-  return Array.from(uniqueTags).sort((left, right) => left.localeCompare(right));
+  createInternalLink(item, page, page.title ?? page.file.name);
+  return item;
 }
 
 function currentPage() {
@@ -112,10 +106,16 @@ function persistedState(page) {
   const hidePainpoints = options.hidePainpoints
     ?? page.hide_painpoints
     ?? (page.show_painpoints != null ? page.show_painpoints === false : false);
+  const painpointClusterFilter = cleanedCandidate(
+    options.painpointClusterFilter
+    ?? page.painpoint_cluster_filter
+    ?? "all"
+  ) || "all";
 
   return {
     hidePainpoints,
-    hideTasksWithoutPainpoints: options.hideTasksWithoutPainpoints ?? page.hide_tasks_without_painpoints === true
+    hideTasksWithoutPainpoints: options.hideTasksWithoutPainpoints ?? page.hide_tasks_without_painpoints === true,
+    painpointClusterFilter
   };
 }
 
@@ -124,7 +124,20 @@ function shouldRefresh(file) {
   return path === viewFilePath
     || path.startsWith("01 Story Nodes/")
     || path.startsWith("02 Problem Analysis/01 Painpoints/")
+    || path.startsWith("02 Problem Analysis/02 Painpoint Clusters/")
     || path.startsWith("03 Solutions/");
+}
+
+function handleRefresh(file) {
+  if (!shouldRefresh(file)) {
+    return;
+  }
+
+  if (file?.path !== viewFilePath) {
+    viewState = null;
+  }
+
+  scheduleRender();
 }
 
 function scheduleRender() {
@@ -146,14 +159,19 @@ async function persistState(nextState) {
 
   const values = {
     hide_painpoints: nextState.hidePainpoints,
-    hide_tasks_without_painpoints: nextState.hideTasksWithoutPainpoints
+    hide_tasks_without_painpoints: nextState.hideTasksWithoutPainpoints,
+    painpoint_cluster_filter: nextState.painpointClusterFilter === "all"
+      ? "all"
+      : nextState.painpointClusterFilter === "without-cluster"
+        ? "without-cluster"
+        : `[[${nextState.painpointClusterFilter}]]`
   };
 
   await app.vault.process(file, content => {
     let updated = content;
 
     for (const [field, value] of Object.entries(values)) {
-      const replacement = `${field}:: ${value ? "true" : "false"}`;
+      const replacement = `${field}:: ${typeof value === "boolean" ? (value ? "true" : "false") : value}`;
       const pattern = new RegExp(`^(>\\s*)?${field}::\\s*.*$`, "m");
 
       if (pattern.test(updated)) {
@@ -171,6 +189,16 @@ async function persistState(nextState) {
   });
 }
 
+function latestState() {
+  return viewState ?? persistedState(currentPage());
+}
+
+function updateViewState(partialState) {
+  setViewState({ ...latestState(), ...partialState });
+  scheduleRender();
+  return viewState;
+}
+
 function renderStoryMap() {
   layoutCleanup();
   layoutCleanup = () => {};
@@ -180,9 +208,12 @@ function renderStoryMap() {
   const state = viewState ?? persistedState(current);
   const hidePainpoints = state.hidePainpoints;
   const hideTasksWithoutPainpoints = state.hideTasksWithoutPainpoints;
+  const painpointClusterFilter = state.painpointClusterFilter;
   const nodeTypes = new Set(["activity", "step", "task"]);
   const nodes = dv.pages('"01 Story Nodes"').where(page => nodeTypes.has((page.entity_type ?? "").toLowerCase()));
   const painpoints = dv.pages('"02 Problem Analysis/01 Painpoints"').where(page => page.entity_type === "painpoint");
+  const painpointClusters = dv.pages('"02 Problem Analysis/02 Painpoint Clusters"')
+    .where(page => page.entity_type === "painpoint_cluster");
   const solutions = dv.pages('"03 Solutions"').where(page => page.entity_type === "solution");
   const levelOrder = { activity: 1, step: 2, task: 3 };
 
@@ -193,11 +224,10 @@ function renderStoryMap() {
     const input = field.createEl("input", { type: "checkbox", cls: "ux-story-map__control-input" });
     input.checked = checked;
     input.addEventListener("change", async () => {
-      viewState = { ...state, [key]: input.checked };
-      renderStoryMap();
+      const nextState = updateViewState({ [key]: input.checked });
 
       try {
-        await persistState(viewState);
+        await persistState(nextState);
       } catch (error) {
         console.error("Failed to persist user story map controls", error);
       }
@@ -206,11 +236,56 @@ function renderStoryMap() {
     field.createSpan({ text: label, cls: "ux-story-map__control-label" });
   }
 
+  function appendSelect({ key, label, value, choices }) {
+    const field = controls.createEl("label", { cls: "ux-story-map__control" });
+    field.createSpan({ text: label, cls: "ux-story-map__control-label" });
+
+    const select = field.createEl("select", { cls: "ux-story-map__control-select" });
+    for (const choice of choices) {
+      const option = select.createEl("option", { text: choice.label, value: choice.value });
+      option.selected = choice.value === value;
+    }
+    select.value = value;
+
+    select.addEventListener("change", async () => {
+      const nextState = updateViewState({ [key]: select.value });
+
+      try {
+        await persistState(nextState);
+      } catch (error) {
+        console.error("Failed to persist user story map controls", error);
+      }
+    });
+  }
+
   appendToggle({ key: "hidePainpoints", label: "Hide Painpoints", checked: hidePainpoints });
   appendToggle({
     key: "hideTasksWithoutPainpoints",
     label: "Hide Tasks Without Painpoints",
     checked: hideTasksWithoutPainpoints
+  });
+  appendSelect({
+    key: "painpointClusterFilter",
+    label: "Painpoint Cluster",
+    value: painpointClusterFilter,
+    choices: [
+      { value: "all", label: "All Clusters" },
+      { value: "without-cluster", label: "Without Cluster" },
+      ...painpointClusters
+        .array()
+        .sort((left, right) => {
+          const orderDelta = (left.order ?? 999) - (right.order ?? 999);
+          if (orderDelta !== 0) {
+            return orderDelta;
+          }
+
+          return (left.title ?? left.file.name).localeCompare(right.title ?? right.file.name);
+        })
+        .map(cluster => ({
+          value: linkKey(cluster.file.path),
+          label: cluster.title ?? cluster.file.name
+        }))
+    ]
   });
 
   function derivedParent(node) {
@@ -278,8 +353,26 @@ function renderStoryMap() {
     return solutions.where(solution => referencesPage(solution.solves, painpoint)).array();
   }
 
+  function clusterFor(painpoint) {
+    return painpointClusters.where(cluster => linkKey(cluster.file.path) === linkKey(painpoint.painpoint_cluster)).array()[0] ?? null;
+  }
+
   function painpointsFor(node) {
-    return painpoints.where(page => linkKey(page.task) === node.file.name)
+    return painpoints.where(page => {
+        if (linkKey(page.task) !== node.file.name) {
+          return false;
+        }
+
+        if (painpointClusterFilter === "all") {
+          return true;
+        }
+
+        if (painpointClusterFilter === "without-cluster") {
+          return !cleanedCandidate(page.painpoint_cluster);
+        }
+
+        return linkKey(page.painpoint_cluster) === painpointClusterFilter;
+      })
       .array()
       .sort((left, right) => (left.title ?? left.file.name).localeCompare(right.title ?? right.file.name));
   }
@@ -343,8 +436,9 @@ function renderStoryMap() {
             createInternalLink(painpointTitle, painpoint, painpoint.title ?? painpoint.file.name);
 
             const meta = painpointCard.createDiv({ cls: "ux-story-map__painpoint-meta" });
-            for (const tag of tagsFor(painpoint)) {
-              appendMetaBadge(meta, tag, "is-tag");
+            const cluster = clusterFor(painpoint);
+            if (cluster) {
+              appendMetaLink(meta, cluster, "is-cluster");
             }
 
             const solutionCount = solutionsFor(painpoint).length;
@@ -472,17 +566,11 @@ function renderStoryMap() {
 }
 
 const metadataChangeRef = app.metadataCache.on("changed", file => {
-  if (shouldRefresh(file)) {
-    viewState = null;
-    scheduleRender();
-  }
+  handleRefresh(file);
 });
 
 const vaultModifyRef = app.vault.on("modify", file => {
-  if (shouldRefresh(file)) {
-    viewState = null;
-    scheduleRender();
-  }
+  handleRefresh(file);
 });
 
 container.__uxStoryMapCleanup = () => {
