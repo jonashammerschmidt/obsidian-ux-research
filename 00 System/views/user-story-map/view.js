@@ -25,6 +25,24 @@ function cleanedCandidate(value) {
     return "";
   }
 
+  if (Array.isArray(value)) {
+    return cleanedCandidate(value[0]);
+  }
+
+  if (typeof value === "object") {
+    if (typeof value.path === "string") {
+      return value.path.trim();
+    }
+
+    if (typeof value.file?.path === "string") {
+      return value.file.path.trim();
+    }
+
+    if (typeof value.value === "string") {
+      return value.value.trim();
+    }
+  }
+
   return String(value)
     .trim()
     .replace(/^['"]|['"]$/g, "")
@@ -241,11 +259,15 @@ function renderStoryMap() {
     field.createSpan({ text: label, cls: "ux-story-map__control-label" });
 
     const select = field.createEl("select", { cls: "ux-story-map__control-select" });
+    const resolvedValue = choices.some(choice => choice.value === value)
+      ? value
+      : (choices[0]?.value ?? "");
+
     for (const choice of choices) {
       const option = select.createEl("option", { text: choice.label, value: choice.value });
-      option.selected = choice.value === value;
+      option.selected = choice.value === resolvedValue;
     }
-    select.value = value;
+    select.value = resolvedValue;
 
     select.addEventListener("change", async () => {
       const nextState = updateViewState({ [key]: select.value });
